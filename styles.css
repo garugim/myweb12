@@ -1,3 +1,4 @@
+
 a:link {
     color: green;
     background-color: transparent;
@@ -18,11 +19,13 @@ a:link {
     background-color: transparent;
     text-decoration: underline;
   }
-
-  body {background-color: rgba(188, 255, 161, 0.692);
+body {background-color: rgba(188, 255, 161, 0.692);
     font-family: "Nanum+Gothic:400", sans-serif;
 }
 h1   {color: blue;
     font-family: "Sofia", sans-serif;
 }
-p    {color: red;}
+h2  {color: red;
+    text-indent: 200px;
+}
+p    {color: rgb(0, 0, 0);}
