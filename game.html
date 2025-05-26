@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>시각적 사다리타기</title>
+    <style>
+        body { font-family: 'Malgun Gothic', Arial, sans-serif; background: #f7f7fa; text-align: center; }
+        #ladderCanvas { border: 1px solid #ccc; background: #fff; margin-top: 20px; }
+        .input-row { margin: 10px 0; }
+        button { padding: 6px 16px; border-radius: 6px; border: 0; background: #e53935; color: #fff; font-weight: bold; cursor: pointer; }
+        button:hover { background: #d32f2f; }
+        #result { margin-top: 16px; font-size: 1.3em; font-weight: bold; color: #222; }
+    </style>
+</head>
+<body>
+    <h2>시각적 사다리타기 게임</h2>
+    <div class="input-row">
+        <input id="names" type="text" placeholder="참가자 이름 (예: 철수,영희,민수,지수)" size="30">
+    </div>
+    <div class="input-row">
+        <input id="goals" type="text" placeholder="결과 (예: 당첨,꽝,꽝,꽝)" size="30">
+    </div>
+    <div class="input-row">
+        <button onclick="setupLadder()">사다리 만들기</button>
+    </div>
+    <canvas id="ladderCanvas" width="500" height="400"></canvas>
+    <div class="input-row">
+        <label for="player">누가 탈까요?</label>
+        <select id="player"></select>
+        <button onclick="playLadder()">사다리타기 시작!</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        // 전역 변수
+        let ladder = [], ladderCols = 0, ladderRows = 0, colX = [], rowY = [];
+        let names = [], goals = [];
+        const canvas = document.getElementById('ladderCanvas');
+        const ctx = canvas.getContext('2d');
+        const W = canvas.width, H = canvas.height;
+
+        function setupLadder() {
+            names = document.getElementById('names').value.split(',').map(x => x.trim()).filter(Boolean);
+            goals = document.getElementById('goals').value.split(',').map(x => x.trim()).filter(Boolean);
+            if (names.length < 2 || names.length !== goals.length) {
+                alert('참가자 수와 결과 수를 맞춰주세요!');
+                return;
+            }
+            // 세로줄과 가로줄 개수
+            ladderCols = names.length;
+            ladderRows = Math.max(6, ladderCols * 2); // 가로줄 수(적당히)
+            // 사다리 데이터 생성
+            ladder = [];
+            for (let r = 0; r < ladderRows; r++) {
+                let row = Array(ladderCols-1).fill(0);
+                for (let c = 0; c < ladderCols-1; c++) {
+                    // 인접 가로줄이 겹치지 않도록 체크
+                    if (r > 0 && ladder[r-1][c]) continue;
+                    row[c] = (Math.random() < 0.5) ? 1 : 0;
+                }
+                ladder.push(row);
+            }
+            // X,Y 좌표 미리 계산
+            colX = Array.from({length: ladderCols}, (_, i) => 60 + i * ((W-120)/(ladderCols-1)));
+            rowY = Array.from({length: ladderRows+1}, (_, i) => 60 + i * ((H-120)/(ladderRows)));
+            // 이름, 결과 select 박스 세팅
+            let sel = document.getElementById('player');
+            sel.innerHTML = names.map((n, i) => `<option value="${i}">${n}</option>`).join('');
+            // 사다리 그리기
+            drawLadder();
+            document.getElementById('result').textContent = '';
+        }
+
+        function drawLadder(path=[]) {
+            ctx.clearRect(0, 0, W, H);
+            ctx.lineWidth = 2;
+            // 세로줄
+            ctx.strokeStyle = "#666";
+            for (let c = 0; c < ladderCols; c++) {
+                ctx.beginPath();
+                ctx.moveTo(colX[c], rowY[0]);
+                ctx.lineTo(colX[c], rowY[ladderRows]);
+                ctx.stroke();
+            }
+            // 가로줄
+            ctx.strokeStyle = "#d32f2f";
+            for (let r = 0; r < ladderRows; r++) {
+                for (let c = 0; c < ladderCols-1; c++) {
+                    if (ladder[r][c]) {
+                        ctx.beginPath();
+                        ctx.moveTo(colX[c], rowY[r+1]);
+                        ctx.lineTo(colX[c+1], rowY[r+1]);
+                        ctx.stroke();
+                    }
+                }
+            }
+            // 이름 표시
+            ctx.font = "16px Malgun Gothic";
+            ctx.fillStyle = "#222";
+            names.forEach((n, c) => {
+                ctx.textAlign = "center";
+                ctx.fillText(n, colX[c], rowY[0] - 20);
+            });
+            // 결과 표시
+            goals.forEach((g, c) => {
+                ctx.textAlign = "center";
+                ctx.fillStyle = "#0277bd";
+                ctx.fillText(g, colX[c], rowY[ladderRows] + 32);
+            });
+            // 경로 그리기
+            if (path.length > 0) {
+                ctx.strokeStyle = "#43a047";
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(path[0][0], path[0][1]);
+                for (let i = 1; i < path.length; i++) {
+                    ctx.lineTo(path[i][0], path[i][1]);
+                }
+                ctx.stroke();
+            }
+        }
+
+        function playLadder() {
+            const playerIdx = Number(document.getElementById('player').value);
+            let c = playerIdx, r = 0;
+            let path = [[colX[c], rowY[0]]];
+            // 사다리 타고 내려가는 알고리즘
+            for (r = 0; r < ladderRows; r++) {
+                if (c < ladderCols-1 && ladder[r][c]) {
+                    // 오른쪽으로 이동
+                    c++;
+                    path.push([colX[c], rowY[r+1]]);
+                } else if (c > 0 && ladder[r][c-1]) {
+                    // 왼쪽으로 이동
+                    c--;
+                    path.push([colX[c], rowY[r+1]]);
+                } else {
+                    // 아래로
+                    path.push([colX[c], rowY[r+1]]);
+                }
+            }
+            // 경로 애니메이션
+            animatePath(path, c);
+        }
+
+        function animatePath(path, resultCol) {
+            let i = 1;
+            function drawStep() {
+                drawLadder(path.slice(0, i+1));
+                if (i < path.length-1) {
+                    i++;
+                    setTimeout(drawStep, 50);
+                } else {
+                    // 결과 출력
+                    document.getElementById('result').textContent = 
+                        `${names[Number(document.getElementById('player').value)]}님의 결과는: ${goals[resultCol]}`;
+                }
+            }
+            drawStep();
+        }
+    </script>
+</body>
+</html>
