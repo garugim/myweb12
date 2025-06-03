@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Portfolio | 3 Section Slide</title>
+    <title>Portfolio | copy</title>
     <style>
         html, body {
             margin: 0; padding: 0; height: 100%;
@@ -28,9 +28,142 @@
             overflow: hidden;
             position: relative;
         }
-        .project-section { background: #f3f3f3; }
-
-        /* 프로필, 타이틀 애니메이션 */
+        .project-section { 
+            background: #f3f3f3; 
+            /* 갤러리에서 중앙정렬 막기 */
+            display: block;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        /* ----------- 프로젝트 카드 가로 스크롤 갤러리 ----------- */
+        .project-bigcard-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 48px;
+            align-items: flex-start;
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100vw;
+            min-height: 100%;
+            padding: 48px 32px 36px 32px;
+            box-sizing: border-box;
+            scrollbar-color: #bbb #eaeaea;
+            scrollbar-width: thin;
+        }
+        .project-bigcard-wrapper::-webkit-scrollbar {
+            height: 18px;
+        }
+        .project-bigcard-wrapper::-webkit-scrollbar-thumb {
+            background: #bbb;
+            border-radius: 16px;
+        }
+        .project-bigcard-wrapper::-webkit-scrollbar-track {
+            background: #eaeaea;
+        }
+        .project-bigcard {
+            width: 600px;
+            height: 880px;
+            background: #ddd;
+            border: 5px solid #222;
+            border-radius: 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 8px 32px 3px rgba(0,0,0,0.10);
+            will-change: transform;
+            margin: 0 auto;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+              /* 자연스러운 커짐 효과를 위해 트랜지션 강화 */
+    transition:
+        transform 0.33s cubic-bezier(.33,1.4,.5,1),
+        box-shadow 0.25s cubic-bezier(.4,1.2,.4,1);
+        }
+        .project-bigcard:hover {
+            transform: scale(1.06);
+            box-shadow: 0 16px 48px 12px rgba(0,0,0,0.21);
+            z-index: 2;
+        }
+        
+        .project-bigcard::before {
+            content: "";
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(24,24,24,0.22) 0%, rgba(36,36,36,0.35) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .project-bigcard:hover {
+            transform: scale(1.045);
+            box-shadow: 0 12px 40px 8px rgba(0,0,0,0.17);
+            z-index: 2;
+        }
+        .project-bigcard .proj-title,
+        .project-bigcard .proj-name,
+        .project-bigcard .proj-period {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            text-shadow: 0 2px 18px #181818c2, 0 1px 6px #2228;
+            width: 100%;
+            text-align: center;
+        }
+        .proj-title {
+            font-size: 62px;
+            font-weight: bold;
+            margin-top: 44px;
+            letter-spacing: 2.2px;
+        }
+        .proj-name {
+            font-size: 54px;
+            font-weight: bold;
+            margin-top: 28px;
+            margin-bottom: 0;
+        }
+        .proj-period {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 58px;
+            margin-top: 14px;
+        }
+        .proj-more {
+            margin-top: auto;        /* 버튼을 아래로 밀기 */
+            margin-bottom: 46px;
+            align-self: center;      /* 가로 가운데 */
+            padding: 15px 56px;
+            border-radius: 24px;
+            border: 4px solid #fff;
+            background: rgba(24,24,24,0.7);
+            font-size: 46px;
+            font-weight: bold;
+            letter-spacing: 2.5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.17s, color 0.17s, border-color 0.2s;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 8px 0 #0004;
+        }
+        .proj-more:hover {
+            background: #fff;
+            color: #181818;
+            border-color: #181818;
+        }
+        @media (max-width: 900px) {
+            .project-bigcard { width: 92vw; height: auto; min-height: 560px;}
+            .proj-title { font-size: 30px; }
+            .proj-name { font-size: 18px; }
+            .proj-more { font-size: 22px; }
+        }
+        /* 기존 네비, 타이틀, 애니메이션, 프로필 등은 동일 */
         .profile-pic {
             width: 180px; height: 180px; background: #888;
             border-radius: 50%; overflow: hidden;
@@ -52,7 +185,6 @@
                         transform 0.8s cubic-bezier(.39,1.26,.44,.95);
         }
         .portfolio-title.animated { opacity: 1; transform: translateY(0);}
-        /* ----------- 마우스오버 네비 ----------- */
         .nav-hover-area {
             position: absolute; top: 0; width: 160px; height: 100%;
             z-index: 12; cursor: pointer; display: flex; align-items: center;
@@ -94,7 +226,6 @@
             .nav-hover-btn { font-size: 18px; padding: 7px 20px;}
             .nav-hover-area { width: 80px; }
         }
-        
     </style>
 </head>
 <body>
@@ -118,14 +249,38 @@
             </div>
             <div class="portfolio-title" id="mainTitle">PORTFOLIO</div>
         </section>
-        <!-- PROJECT 섹션: 왼쪽 영역에만 메인 이동(hover시만 버튼 등장) -->
+        <!-- PROJECT 섹션: 가로 스크롤 카드 갤러리로 구현 -->
         <section class="section project-section">
-            
             <div class="nav-hover-area left" id="projectLeftArea">
                 <button class="nav-hover-btn" id="goMainFromProject">&lt; MAIN</button>
             </div>
+            <div class="project-bigcard-wrapper">
+                <div class="project-bigcard" style="background-image: url('your-image1.jpg');">
+                    <div class="proj-title">PROJECT.1</div>
+                    <div class="proj-name">PROJECT NAME 1</div>
+                    <div class="proj-period">2024.01 ~ 2024.06</div>
+                    <button class="proj-more">MORE</button>
+                </div>
+                <div class="project-bigcard" style="background-image: url('your-image2.jpg');">
+                    <div class="proj-title">PROJECT.2</div>
+                    <div class="proj-name">PROJECT NAME 2</div>
+                    <div class="proj-period">2023.05 ~ 2023.12</div>
+                    <button class="proj-more">MORE</button>
+                </div>
+                <div class="project-bigcard" style="background-image: url('your-image3.jpg');">
+                    <div class="proj-title">PROJECT.3</div>
+                    <div class="proj-name">PROJECT NAME 3</div>
+                    <div class="proj-period">2023.01 ~ 2023.04</div>
+                    <button class="proj-more">MORE</button>
+                </div>
+                <div class="project-bigcard" style="background-image: url('your-image4.jpg');">
+                    <div class="proj-title">PROJECT.4</div>
+                    <div class="proj-name">PROJECT NAME 4</div>
+                    <div class="proj-period">2022.05 ~ 2022.12</div>
+                    <button class="proj-more">MORE</button>
+                </div>
+            </div>
         </section>
-        
     </div>
     <script>
         // 섹션 이동 함수
@@ -204,5 +359,3 @@
     </script>
 </body>
 </html>
-
-ㅇㅇㅇ
