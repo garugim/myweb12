@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects | Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f3f3f3;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+        .project-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 32px;
+            margin: 56px 0 0 0;
+            min-height: 90vh;
+        }
+        .project-card {
+            background: #ddd;
+            border: 4px solid #111;
+            box-sizing: border-box;
+            width: 360px;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 32px 24px 24px 24px;
+        }
+        .project-label {
+            font-size: 38px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+            color: #111;
+            margin-bottom: 32px;
+        }
+        .project-title {
+            font-size: 38px;
+            font-weight: bold;
+            color: #111;
+            text-align: center;
+        }
+        .project-period {
+            font-size: 15px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+        .project-img {
+            margin: 38px 0;
+            background: none;
+            width: 210px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            font-weight: bold;
+            color: #999;
+            letter-spacing: 3px;
+        }
+        .more-btn {
+            margin-top: auto;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: bold;
+            background: #fff;
+            border: 4px solid #111;
+            border-radius: 18px;
+            padding: 8px 36px;
+            cursor: pointer;
+            transition: background 0.17s, color 0.17s;
+        }
+        .more-btn:hover {
+            background: #111;
+            color: #fff;
+        }
+        @media (max-width: 1150px) {
+            .project-wrapper { flex-direction: column; align-items: center; gap: 30px; }
+            .project-card { width: 96vw; max-width: 420px; }
+        }
+        /* 우상단 네모 아이콘 (장식) */
+        .window-icons {
+            position: absolute;
+            top: 18px; right: 32px;
+            display: flex;
+            gap: 10px;
+        }
+        .window-icon {
+            border: 4px solid #111;
+            width: 38px; height: 38px;
+            background: #fff;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="window-icons">
+        <div class="window-icon"></div>
+        <div class="window-icon"></div>
+    </div>
+    <div class="project-wrapper">
+        <!-- CARD 1 -->
+        <div class="project-card">
+            <div class="project-label">PROJ. 1</div>
+            <div class="project-title">PROJECT NAME</div>
+            <div class="project-period">PROJECT PERIOD</div>
+            <div class="project-img">PIC</div>
+            <button class="more-btn">MORE</button>
+        </div>
+        <!-- CARD 2 -->
+        <div class="project-card">
+            <div class="project-label">PROJ. 2</div>
+            <div class="project-img">PIC</div>
+            <button class="more-btn">MORE</button>
+        </div>
+        <!-- CARD 3 -->
+        <div class="project-card">
+            <div class="project-label">PROJ. 3</div>
+            <div class="project-img">PIC</div>
+            <button class="more-btn">MORE</button>
+        </div>
+    </div>
+</body>
+</html>
