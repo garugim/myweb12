@@ -2,131 +2,202 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Projects | Portfolio</title>
+    <title>Portfolio | 3 Section Slide</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #f3f3f3;
+        html, body {
+            margin: 0; padding: 0; height: 100%;
             font-family: 'Arial Black', Arial, sans-serif;
+            overflow-x: hidden; background: #eee;
         }
-        .project-wrapper {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 32px;
-            margin: 56px 0 0 0;
-            min-height: 90vh;
+        .h-scroll-container {
+            display: flex; flex-direction: row;
+            width: 300vw; height: 100vh;
+            transition: transform 0.8s cubic-bezier(.77,0,.18,1);
         }
-        .project-card {
-            background: #ddd;
-            border: 4px solid #111;
-            box-sizing: border-box;
-            width: 360px;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .section {
+            width: 100vw; height: 100vh; box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             position: relative;
-            padding: 32px 24px 24px 24px;
         }
-        .project-label {
-            font-size: 38px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-align: center;
-            color: #111;
-            margin-bottom: 32px;
+        .info-section { background: #f5f5f5; }
+        .main-section {
+            background: #eee;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            position: relative;
         }
-        .project-title {
-            font-size: 38px;
-            font-weight: bold;
-            color: #111;
-            text-align: center;
+        .project-section { background: #f3f3f3; }
+
+        /* 프로필, 타이틀 애니메이션 */
+        .profile-pic {
+            width: 180px; height: 180px; background: #888;
+            border-radius: 50%; overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.16); border: 6px solid #fff;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+            opacity: 0; transform: scale(0.6);
+            transition: opacity 0.6s cubic-bezier(.39,1.26,.44,.95),
+                        transform 0.8s cubic-bezier(.39,1.26,.44,.95);
         }
-        .project-period {
-            font-size: 15px;
-            font-weight: bold;
-            color: #222;
-            margin-bottom: 22px;
-            text-align: center;
+        .profile-pic.animated { opacity: 1; transform: scale(1);}
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; display: block;}
+        .portfolio-title {
+            font-size: 56px; font-weight: bold; letter-spacing: 4px;
+            color: #111; margin-top: 12px; line-height: 1.1;
+            text-shadow: 2px 2px 7px #fff8; text-align: center;
+            opacity: 0; transform: translateY(60px);
+            transition: opacity 0.8s cubic-bezier(.39,1.26,.44,.95),
+                        transform 0.8s cubic-bezier(.39,1.26,.44,.95);
         }
-        .project-img {
-            margin: 38px 0;
-            background: none;
-            width: 210px;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            font-weight: bold;
-            color: #999;
-            letter-spacing: 3px;
+        .portfolio-title.animated { opacity: 1; transform: translateY(0);}
+        /* ----------- 마우스오버 네비 ----------- */
+        .nav-hover-area {
+            position: absolute; top: 0; width: 160px; height: 100%;
+            z-index: 12; cursor: pointer; display: flex; align-items: center;
         }
-        .more-btn {
-            margin-top: auto;
-            margin-bottom: 10px;
-            font-size: 32px;
-            font-weight: bold;
+        .nav-hover-area.left { left: 0; justify-content: flex-start;}
+        .nav-hover-area.right { right: 0; justify-content: flex-end;}
+        .nav-hover-btn {
+            opacity: 0;
+            transform: scale(0.96) translateY(10px);
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(.62,.04,.41,.97), 
+                        transform 0.6s cubic-bezier(.62,.04,.41,.97);
             background: #fff;
-            border: 4px solid #111;
-            border-radius: 18px;
-            padding: 8px 36px;
+            border: 2.5px solid #bdbdbd;
+            border-radius: 14px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #181818;
+            padding: 14px 32px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            letter-spacing: 1.5px;
+            user-select: none;
             cursor: pointer;
-            transition: background 0.17s, color 0.17s;
+            margin: 0 8px;
         }
-        .more-btn:hover {
-            background: #111;
-            color: #fff;
+        .nav-hover-area:hover .nav-hover-btn,
+        .nav-hover-btn:focus,
+        .nav-hover-btn:hover {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
         }
-        @media (max-width: 1150px) {
-            .project-wrapper { flex-direction: column; align-items: center; gap: 30px; }
-            .project-card { width: 96vw; max-width: 420px; }
+        .nav-hover-btn:hover {
+            background: #181818; color: #fff; border-color: #181818;
         }
-        /* 우상단 네모 아이콘 (장식) */
-        .window-icons {
-            position: absolute;
-            top: 18px; right: 32px;
-            display: flex;
-            gap: 10px;
-        }
-        .window-icon {
-            border: 4px solid #111;
-            width: 38px; height: 38px;
-            background: #fff;
-            display: inline-block;
-            box-sizing: border-box;
+        @media (max-width: 700px) {
+            .portfolio-title { font-size: 32px; }
+            .profile-pic { width: 100px; height: 100%; }
+            .nav-hover-btn { font-size: 18px; padding: 7px 20px;}
+            .nav-hover-area { width: 80px; }
         }
     </style>
 </head>
 <body>
-    <div class="window-icons">
-        <div class="window-icon"></div>
-        <div class="window-icon"></div>
+    <div id="scrollContainer" class="h-scroll-container" style="transform: translateX(-100vw);">
+        <!-- INFO 섹션: 오른쪽 영역에만 메인 이동 -->
+        <section class="section info-section">
+            <div class="nav-hover-area right" id="infoRightArea">
+                <button class="nav-hover-btn" id="toMainFromInfo">MAIN &gt;</button>
+            </div>
+        </section>
+        <!-- MAIN/PROFILE 섹션: 기존과 동일 -->
+        <section class="section main-section">
+            <div class="nav-hover-area left" id="mainLeftArea">
+                <button class="nav-hover-btn" id="goInfo">&lt; INFO</button>
+            </div>
+            <div class="nav-hover-area right" id="mainRightArea">
+                <button class="nav-hover-btn" id="goProject">PROJECT &gt;</button>
+            </div>
+            <div class="profile-pic" id="mainProfilePic">
+                <img src="profile.jpg" alt="My Pic">
+            </div>
+            <div class="portfolio-title" id="mainTitle">PORTFOLIO</div>
+        </section>
+        <!-- PROJECT 섹션: 왼쪽 영역에만 메인 이동(hover시만 버튼 등장) -->
+        <section class="section project-section">
+            <div class="nav-hover-area left" id="projectLeftArea">
+                <button class="nav-hover-btn" id="goMainFromProject">&lt; MAIN</button>
+            </div>
+        </section>
     </div>
-    <div class="project-wrapper">
-        <!-- CARD 1 -->
-        <div class="project-card">
-            <div class="project-label">PROJ. 1</div>
-            <div class="project-title">PROJECT NAME</div>
-            <div class="project-period">PROJECT PERIOD</div>
-            <div class="project-img">PIC</div>
-            <button class="more-btn">MORE</button>
-        </div>
-        <!-- CARD 2 -->
-        <div class="project-card">
-            <div class="project-label">PROJ. 2</div>
-            <div class="project-img">PIC</div>
-            <button class="more-btn">MORE</button>
-        </div>
-        <!-- CARD 3 -->
-        <div class="project-card">
-            <div class="project-label">PROJ. 3</div>
-            <div class="project-img">PIC</div>
-            <button class="more-btn">MORE</button>
-        </div>
-    </div>
+    <script>
+        // 섹션 이동 함수
+        function goToSection(idx) {
+            const container = document.getElementById('scrollContainer');
+            container.style.transform = `translateX(-${idx * 100}vw)`;
+        }
+        // MAIN ←→ INFO/PROJECT
+        document.getElementById('goInfo').onclick = e => { goToSection(0); e.stopPropagation(); };
+        document.getElementById('goProject').onclick = e => { goToSection(2); e.stopPropagation(); };
+        document.getElementById('toMainFromInfo').onclick = e => { goToSection(1); e.stopPropagation(); };
+        document.getElementById('goMainFromProject').onclick = e => { goToSection(1); e.stopPropagation(); };
+
+        // 영역 클릭 시에도 반응 (버튼 누른 경우는 위에서 이미 처리)
+        document.getElementById('infoRightArea').onclick = function(e) {
+            if(e.target.classList.contains('nav-hover-btn')) return;
+            goToSection(1);
+        };
+        document.getElementById('mainLeftArea').onclick = function(e) {
+            if(e.target.classList.contains('nav-hover-btn')) return;
+            goToSection(0);
+        };
+        document.getElementById('mainRightArea').onclick = function(e) {
+            if(e.target.classList.contains('nav-hover-btn')) return;
+            goToSection(2);
+        };
+        document.getElementById('projectLeftArea').onclick = function(e) {
+            if(e.target.classList.contains('nav-hover-btn')) return;
+            goToSection(1);
+        };
+
+        // 키보드 방향키 이동
+        document.addEventListener('keydown', e => {
+            const container = document.getElementById('scrollContainer');
+            let current = 1;
+            if(container.style.transform.includes('-200vw')) current = 2;
+            else if(container.style.transform.includes('-100vw')) current = 1;
+            else current = 0;
+            if ((e.key === "ArrowLeft" || e.key === "ArrowUp") && current > 0) goToSection(current-1);
+            if ((e.key === "ArrowRight" || e.key === "ArrowDown") && current < 2) goToSection(current+1);
+        });
+
+        // 터치 스와이프(모바일) 이동
+        let touchStartX = null;
+        document.addEventListener('touchstart', e => {
+            if(e.touches.length === 1) touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', e => {
+            if(touchStartX === null) return;
+            const touchEndX = e.changedTouches[0].clientX;
+            const delta = touchEndX - touchStartX;
+            const container = document.getElementById('scrollContainer');
+            let current = 1;
+            if(container.style.transform.includes('-200vw')) current = 2;
+            else if(container.style.transform.includes('-100vw')) current = 1;
+            else current = 0;
+            if (delta < -60 && current < 2) goToSection(current+1);
+            else if (delta > 60 && current > 0) goToSection(current-1);
+            touchStartX = null;
+        });
+
+        // 메인페이지 애니메이션 효과
+        window.addEventListener('DOMContentLoaded', () => {
+            const pic = document.getElementById('mainProfilePic');
+            const title = document.getElementById('mainTitle');
+            setTimeout(() => {
+                pic.classList.add('animated');
+            }, 250);
+            pic.addEventListener('transitionend', function handler(e) {
+                if(e.propertyName === 'opacity') {
+                    setTimeout(() => title.classList.add('animated'), 80);
+                    pic.removeEventListener('transitionend', handler);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
