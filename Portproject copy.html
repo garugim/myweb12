@@ -8,6 +8,7 @@
             margin: 0; padding: 0; height: 100%;
             font-family: 'Arial Black', Arial, sans-serif;
             overflow-x: hidden; background: #eee;
+            height: 100%;
         }
         .h-scroll-container {
             display: flex; flex-direction: row;
@@ -16,10 +17,24 @@
         }
         .section {
             width: 100vw; height: 100vh; box-sizing: border-box;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
             position: relative;
+            overflow: hidden;
         }
-        .info-section { background: #f5f5f5; }
+        /* ---- Info Section ---- */
+        .info-section {
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 7vw;
+        }
+        .info-content {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #202020;
+        }
+        /* ---- Main Section ---- */
         .main-section {
             background: #eee;
             background-image: url('background.jpg');
@@ -27,43 +42,123 @@
             background-position: center;
             overflow: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .project-section { 
-            background: #f3f3f3; 
-            /* 갤러리에서 중앙정렬 막기 */
-            display: block;
+        /* ---- Project Section ---- */
+        .project-section {
+            background: #f3f3f3;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 7vw;
             position: relative;
-            width: 100vw;
-            height: 100vh;
-            padding: 0;
+            width: 100vw; height: 100vh;
             box-sizing: border-box;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
-        /* ----------- 프로젝트 카드 가로 스크롤 갤러리 ----------- */
+        /* ===== 네비게이션 버튼 ===== */
+        .nav-hover-area {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 120px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 버튼이 뜨는 trigger zone(세로 가운데 전체 영역) */
+            pointer-events: auto;
+            /* background: rgba(0,0,0,0.01); 디버깅 시 사용 */
+        }
+        .nav-hover-area.left { left: 24px; }
+        .nav-hover-area.right { right: 24px; }
+        .nav-hover-btn {
+            background: #fff;
+            border: 2.5px solid #bdbdbd;
+            border-radius: 14px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #181818;
+            padding: 14px 32px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            letter-spacing: 1.5px;
+            user-select: none;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: auto;
+            transition:
+                opacity 0.5s cubic-bezier(.62,.04,.41,.97),
+                background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+            right: 0; left: 0; /* reset for safe side */
+        }
+        .nav-hover-area:hover .nav-hover-btn,
+        .nav-hover-btn:focus,
+        .nav-hover-btn:active {
+            opacity: 1;
+        }
+        .nav-hover-btn:hover {
+            background: #181818; color: #fff; border-color: #181818; box-shadow: 0 6px 18px 0 #0001;
+        }
+        /* 메인/프로젝트에서 버튼 위치 미세 조정(너무 붙지 않게) */
+        .main-section .nav-hover-area.right,
+        .project-section .nav-hover-area.right {
+            right: 72px;
+        }
+        .main-section .nav-hover-area.left,
+        .project-section .nav-hover-area.left,
+        .info-section .nav-hover-area.left {
+            left: 38px;
+        }
+
+        /* ====== 메인 프로필 원 + 타이틀 애니 ====== */
+        .profile-pic {
+            width: 200px; height: 200px; background: #bbb;
+            border-radius: 50%; overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.16); border: 8px solid #fff;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 32px; margin-top: 16px;
+            transition: box-shadow 0.3s;
+            opacity: 0; transform: scale(0.7);
+            transition:
+                opacity 0.8s cubic-bezier(.46,1.64,.62,1),
+                transform 0.8s cubic-bezier(.46,1.64,.62,1);
+        }
+        .profile-pic.animated {
+            opacity: 1; transform: scale(1);
+        }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; display: block;}
+        .portfolio-title {
+            font-size: 54px; font-weight: bold; letter-spacing: 3.5px;
+            color: #111; margin-top: 20px; line-height: 1.1;
+            text-shadow: 2px 2px 8px #fff7; text-align: center;
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.9s cubic-bezier(.49,1.23,.44,1.01),
+                        transform 0.7s cubic-bezier(.39,1.26,.44,.95);
+        }
+        .portfolio-title.animated { opacity: 1; transform: translateY(0); }
+        /* ===== 프로젝트 카드 ===== */
         .project-bigcard-wrapper {
             display: flex;
             flex-direction: row;
             gap: 48px;
             align-items: flex-start;
             overflow-x: auto;
-            overflow-y: hidden;
-            width: 100vw;
+            overflow-y: visible;
             min-height: 100%;
             padding: 48px 32px 36px 32px;
             box-sizing: border-box;
             scrollbar-color: #bbb #eaeaea;
             scrollbar-width: thin;
+            width: 100%;
         }
-        .project-bigcard-wrapper::-webkit-scrollbar {
-            height: 18px;
-        }
-        .project-bigcard-wrapper::-webkit-scrollbar-thumb {
-            background: #bbb;
-            border-radius: 16px;
-        }
-        .project-bigcard-wrapper::-webkit-scrollbar-track {
-            background: #eaeaea;
-        }
+        .project-bigcard-wrapper::-webkit-scrollbar { height: 18px; }
+        .project-bigcard-wrapper::-webkit-scrollbar-thumb { background: #bbb; border-radius: 16px;}
+        .project-bigcard-wrapper::-webkit-scrollbar-track { background: #eaeaea; }
         .project-bigcard {
             width: 600px;
             height: 880px;
@@ -77,34 +172,17 @@
             justify-content: center;
             position: relative;
             box-shadow: 0 8px 32px 3px rgba(0,0,0,0.10);
-            will-change: transform;
             margin: 0 auto;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             overflow: hidden;
-              /* 자연스러운 커짐 효과를 위해 트랜지션 강화 */
-    transition:
-        transform 0.33s cubic-bezier(.33,1.4,.5,1),
-        box-shadow 0.25s cubic-bezier(.4,1.2,.4,1);
+            opacity: 0;
+            transform: translateY(-60px);
+            transition: opacity 0.7s cubic-bezier(.6,1.4,.62,1), transform 0.8s cubic-bezier(.59,1.25,.64,1.01);
         }
-        .project-bigcard:hover {
-            transform: scale(1.06);
-            box-shadow: 0 16px 48px 12px rgba(0,0,0,0.21);
-            z-index: 2;
-        }
-        
-        .project-bigcard::before {
-            content: "";
-            position: absolute; inset: 0;
-            background: linear-gradient(to bottom, rgba(24,24,24,0.22) 0%, rgba(36,36,36,0.35) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-        .project-bigcard:hover {
-            transform: scale(1.045);
-            box-shadow: 0 12px 40px 8px rgba(0,0,0,0.17);
-            z-index: 2;
+        .project-bigcard.visible {
+            opacity: 1; transform: translateY(0);
         }
         .project-bigcard .proj-title,
         .project-bigcard .proj-name,
@@ -116,203 +194,130 @@
             width: 100%;
             text-align: center;
         }
-        .proj-title {
-            font-size: 62px;
-            font-weight: bold;
-            margin-top: 44px;
-            letter-spacing: 2.2px;
-        }
-        .proj-name {
-            font-size: 54px;
-            font-weight: bold;
-            margin-top: 28px;
-            margin-bottom: 0;
-        }
-        .proj-period {
-            font-size: 25px;
-            font-weight: bold;
-            margin-bottom: 58px;
-            margin-top: 14px;
-        }
+        .proj-title { font-size: 62px; font-weight: bold; margin-top: 44px; letter-spacing: 2.2px;}
+        .proj-name { font-size: 54px; font-weight: bold; margin-top: 28px; margin-bottom: 0;}
+        .proj-period { font-size: 25px; font-weight: bold; margin-bottom: 58px; margin-top: 14px;}
         .proj-more {
-            margin-top: auto;        /* 버튼을 아래로 밀기 */
-            margin-bottom: 46px;
-            align-self: center;      /* 가로 가운데 */
-            padding: 15px 56px;
-            border-radius: 24px;
-            border: 4px solid #fff;
+            margin-top: auto; margin-bottom: 46px;
+            align-self: center; padding: 15px 56px;
+            border-radius: 24px; border: 4px solid #fff;
             background: rgba(24,24,24,0.7);
-            font-size: 46px;
-            font-weight: bold;
-            letter-spacing: 2.5px;
-            color: #fff;
-            cursor: pointer;
+            font-size: 46px; font-weight: bold; letter-spacing: 2.5px;
+            color: #fff; cursor: pointer;
             transition: background 0.17s, color 0.17s, border-color 0.2s;
-            position: relative;
-            z-index: 2;
+            position: relative; z-index: 2;
             box-shadow: 0 2px 8px 0 #0004;
         }
-        .proj-more:hover {
-            background: #fff;
-            color: #181818;
-            border-color: #181818;
-        }
-        @media (max-width: 900px) {
-            .project-bigcard { width: 92vw; height: auto; min-height: 560px;}
-            .proj-title { font-size: 30px; }
-            .proj-name { font-size: 18px; }
-            .proj-more { font-size: 22px; }
-        }
-        /* 기존 네비, 타이틀, 애니메이션, 프로필 등은 동일 */
-        .profile-pic {
-            width: 180px; height: 180px; background: #888;
-            border-radius: 50%; overflow: hidden;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.16); border: 6px solid #fff;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 24px;
-            opacity: 0; transform: scale(0.6);
-            transition: opacity 0.6s cubic-bezier(.39,1.26,.44,.95),
-                        transform 0.8s cubic-bezier(.39,1.26,.44,.95);
-        }
-        .profile-pic.animated { opacity: 1; transform: scale(1);}
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; display: block;}
-        .portfolio-title {
-            font-size: 56px; font-weight: bold; letter-spacing: 4px;
-            color: #111; margin-top: 12px; line-height: 1.1;
-            text-shadow: 2px 2px 7px #fff8; text-align: center;
-            opacity: 0; transform: translateY(60px);
-            transition: opacity 0.8s cubic-bezier(.39,1.26,.44,.95),
-                        transform 0.8s cubic-bezier(.39,1.26,.44,.95);
-        }
-        .portfolio-title.animated { opacity: 1; transform: translateY(0);}
-        .nav-hover-area {
-            position: absolute; top: 0; width: 160px; height: 100%;
-            z-index: 12; cursor: pointer; display: flex; align-items: center;
-        }
-        .nav-hover-area.left { left: 0; justify-content: flex-start;}
-        .nav-hover-area.right { right: 0; justify-content: flex-end;}
-        .nav-hover-btn {
-            opacity: 0;
-            transform: scale(0.96) translateY(10px);
-            pointer-events: none;
-            transition: opacity 0.5s cubic-bezier(.62,.04,.41,.97), 
-                        transform 0.6s cubic-bezier(.62,.04,.41,.97);
-            background: #fff;
-            border: 2.5px solid #bdbdbd;
-            border-radius: 14px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #181818;
-            padding: 14px 32px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-            letter-spacing: 1.5px;
-            user-select: none;
-            cursor: pointer;
-            margin: 0 8px;
-        }
-        .nav-hover-area:hover .nav-hover-btn,
-        .nav-hover-btn:focus,
-        .nav-hover-btn:hover {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-        }
-        .nav-hover-btn:hover {
-            background: #181818; color: #fff; border-color: #181818;
+        .proj-more:hover { background: #fff; color: #181818; border-color: #181818; }
+        @media (max-width: 1100px) {
+            .project-bigcard { width: 390px; height: 570px; }
+            .proj-title { font-size: 32px; }
+            .proj-name { font-size: 26px; }
+            .proj-period { font-size: 17px; }
+            .proj-more { font-size: 23px; padding: 11px 32px; }
+            .project-bigcard-wrapper { gap: 22px; padding: 24px 8px 18px 8px;}
+            .profile-pic { width: 110px; height: 110px; }
+            .portfolio-title { font-size: 28px;}
         }
         @media (max-width: 700px) {
-            .portfolio-title { font-size: 32px; }
-            .profile-pic { width: 100px; height: 100%; }
-            .nav-hover-btn { font-size: 18px; padding: 7px 20px;}
-            .nav-hover-area { width: 80px; }
+            .project-bigcard { width: 88vw; height: 320px; }
+            .proj-title { font-size: 17px; }
+            .proj-name { font-size: 12px; }
+            .proj-period { font-size: 10px; }
+            .proj-more { font-size: 13px; padding: 7px 18px;}
+            .portfolio-title { font-size: 20px; }
+            .profile-pic { width: 60px; height: 60px; }
+            .nav-hover-btn { font-size: 13px; padding: 6px 13px;}
         }
     </style>
 </head>
 <body>
     <div id="scrollContainer" class="h-scroll-container" style="transform: translateX(-100vw);">
-        <!-- INFO 섹션: 오른쪽 영역에만 메인 이동 -->
+        <!-- INFO 섹션: 왼쪽정렬, 오른쪽에 버튼 -->
         <section class="section info-section">
+            <div class="info-content">이곳은 인포메이션(소개) 영역입니다.</div>
             <div class="nav-hover-area right" id="infoRightArea">
-                <button class="nav-hover-btn" id="toMainFromInfo">MAIN &gt;</button>
+                <button class="nav-hover-btn">MAIN &gt;</button>
             </div>
         </section>
-        <!-- MAIN/PROFILE 섹션: 기존과 동일 -->
+        <!-- MAIN/PROFILE 섹션: 중앙, 원형 프로필 -->
         <section class="section main-section">
             <div class="nav-hover-area left" id="mainLeftArea">
-                <button class="nav-hover-btn" id="goInfo">&lt; INFO</button>
+                <button class="nav-hover-btn">&lt; INFO</button>
             </div>
             <div class="nav-hover-area right" id="mainRightArea">
-                <button class="nav-hover-btn" id="goProject">PROJECT &gt;</button>
+                <button class="nav-hover-btn">PROJECT &gt;</button>
             </div>
             <div class="profile-pic" id="mainProfilePic">
                 <img src="profile.jpg" alt="My Pic">
             </div>
             <div class="portfolio-title" id="mainTitle">PORTFOLIO</div>
         </section>
-        <!-- PROJECT 섹션: 가로 스크롤 카드 갤러리로 구현 -->
+        <!-- PROJECT 섹션: 오른쪽정렬, 왼쪽에 버튼 -->
         <section class="section project-section">
             <div class="nav-hover-area left" id="projectLeftArea">
-                <button class="nav-hover-btn" id="goMainFromProject">&lt; MAIN</button>
+                <button class="nav-hover-btn">&lt; MAIN</button>
             </div>
-            <div class="project-bigcard-wrapper">
-                <div class="project-bigcard" style="background-image: url('your-image1.jpg');">
+            <div class="project-bigcard-wrapper" id="projectCardWrapper">
+                <div class="project-bigcard">
                     <div class="proj-title">PROJECT.1</div>
                     <div class="proj-name">PROJECT NAME 1</div>
                     <div class="proj-period">2024.01 ~ 2024.06</div>
                     <button class="proj-more">MORE</button>
                 </div>
-                <div class="project-bigcard" style="background-image: url('your-image2.jpg');">
+                <div class="project-bigcard">
                     <div class="proj-title">PROJECT.2</div>
                     <div class="proj-name">PROJECT NAME 2</div>
                     <div class="proj-period">2023.05 ~ 2023.12</div>
                     <button class="proj-more">MORE</button>
                 </div>
-                <div class="project-bigcard" style="background-image: url('your-image3.jpg');">
+                <div class="project-bigcard">
                     <div class="proj-title">PROJECT.3</div>
                     <div class="proj-name">PROJECT NAME 3</div>
                     <div class="proj-period">2023.01 ~ 2023.04</div>
-                    <button class="proj-more">MORE</button>
-                </div>
-                <div class="project-bigcard" style="background-image: url('your-image4.jpg');">
-                    <div class="proj-title">PROJECT.4</div>
-                    <div class="proj-name">PROJECT NAME 4</div>
-                    <div class="proj-period">2022.05 ~ 2022.12</div>
                     <button class="proj-more">MORE</button>
                 </div>
             </div>
         </section>
     </div>
     <script>
-        // 섹션 이동 함수
+        // 페이지 진입시: 메인 섹션 보여주기
+        document.addEventListener('DOMContentLoaded', () => {
+            goToSection(1);
+            setTimeout(() => {
+                document.getElementById('mainProfilePic').classList.add('animated');
+            }, 150);
+            document.getElementById('mainProfilePic').addEventListener('transitionend', function handler(e) {
+                if (e.propertyName === 'opacity') {
+                    setTimeout(() => document.getElementById('mainTitle').classList.add('animated'), 180);
+                    document.getElementById('mainProfilePic').removeEventListener('transitionend', handler);
+                }
+            });
+        });
+
+        // 섹션 이동 함수 (카드 등장 애니메이션은 transform 끝난 후 실행)
         function goToSection(idx) {
             const container = document.getElementById('scrollContainer');
             container.style.transform = `translateX(-${idx * 100}vw)`;
+
+            // PROJECT 카드 애니메이션은 transition이 끝난 뒤 실행 (transform 0.8s)
+            if (idx === 2) {
+                const cards = document.querySelectorAll('.project-bigcard');
+                cards.forEach(card => card.classList.remove('visible'));
+                setTimeout(() => {
+                    cards.forEach((card, i) => {
+                        setTimeout(() => card.classList.add('visible'), 180 + i * 130);
+                    });
+                }, 820); // transform duration + 여유
+            }
         }
-        // MAIN ←→ INFO/PROJECT
-        document.getElementById('goInfo').onclick = e => { goToSection(0); e.stopPropagation(); };
-        document.getElementById('goProject').onclick = e => { goToSection(2); e.stopPropagation(); };
-        document.getElementById('toMainFromInfo').onclick = e => { goToSection(1); e.stopPropagation(); };
-        document.getElementById('goMainFromProject').onclick = e => { goToSection(1); e.stopPropagation(); };
+        // 버튼 이벤트 할당
+        document.getElementById('mainLeftArea').onclick = e => { goToSection(0); };
+        document.getElementById('mainRightArea').onclick = e => { goToSection(2); };
+        document.getElementById('infoRightArea').onclick = e => { goToSection(1); };
+        document.getElementById('projectLeftArea').onclick = e => { goToSection(1); };
 
-        // 영역 클릭 시에도 반응 (버튼 누른 경우는 위에서 이미 처리)
-        document.getElementById('infoRightArea').onclick = function(e) {
-            if(e.target.classList.contains('nav-hover-btn')) return;
-            goToSection(1);
-        };
-        document.getElementById('mainLeftArea').onclick = function(e) {
-            if(e.target.classList.contains('nav-hover-btn')) return;
-            goToSection(0);
-        };
-        document.getElementById('mainRightArea').onclick = function(e) {
-            if(e.target.classList.contains('nav-hover-btn')) return;
-            goToSection(2);
-        };
-        document.getElementById('projectLeftArea').onclick = function(e) {
-            if(e.target.classList.contains('nav-hover-btn')) return;
-            goToSection(1);
-        };
-
-        // 키보드 방향키 이동
+        // 방향키로 섹션 이동
         document.addEventListener('keydown', e => {
             const container = document.getElementById('scrollContainer');
             let current = 1;
@@ -323,7 +328,7 @@
             if ((e.key === "ArrowRight" || e.key === "ArrowDown") && current < 2) goToSection(current+1);
         });
 
-        // 터치 스와이프(모바일) 이동
+        // 모바일 터치 스와이프
         let touchStartX = null;
         document.addEventListener('touchstart', e => {
             if(e.touches.length === 1) touchStartX = e.touches[0].clientX;
@@ -332,29 +337,14 @@
             if(touchStartX === null) return;
             const touchEndX = e.changedTouches[0].clientX;
             const delta = touchEndX - touchStartX;
-            const container = document.getElementById('scrollContainer');
             let current = 1;
+            const container = document.getElementById('scrollContainer');
             if(container.style.transform.includes('-200vw')) current = 2;
             else if(container.style.transform.includes('-100vw')) current = 1;
             else current = 0;
             if (delta < -60 && current < 2) goToSection(current+1);
             else if (delta > 60 && current > 0) goToSection(current-1);
             touchStartX = null;
-        });
-
-        // 메인페이지 애니메이션 효과
-        window.addEventListener('DOMContentLoaded', () => {
-            const pic = document.getElementById('mainProfilePic');
-            const title = document.getElementById('mainTitle');
-            setTimeout(() => {
-                pic.classList.add('animated');
-            }, 250);
-            pic.addEventListener('transitionend', function handler(e) {
-                if(e.propertyName === 'opacity') {
-                    setTimeout(() => title.classList.add('animated'), 80);
-                    pic.removeEventListener('transitionend', handler);
-                }
-            });
         });
     </script>
 </body>
