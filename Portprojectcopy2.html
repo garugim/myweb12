@@ -4,30 +4,42 @@
     <meta charset="UTF-8">
     <title>Portfolio | copy</title>
     <style>
-        html, body { margin:0; padding:0; height:100%; background:#eee; overflow-x:hidden;}
-        body { width: 100vw; min-height: 100vh; }
-        .h-scroll-container { display: flex; flex-direction: row; width: 300vw; height: 100vh;
-            transition: transform 0.8s cubic-bezier(.77,0,.18,1); position: fixed; left: 0; top: 0;}
-        .section { width:100vw; height:100vh; box-sizing:border-box; position:relative; overflow:hidden;}
-        .nav-hover-area { position: absolute; top: 0; bottom: 0; width: 120px; z-index: 30;
-            display: flex; align-items: center; justify-content: center; pointer-events: auto;}
-        .nav-hover-area.left  { left: 0;  padding-left: 36px; }
-        .nav-hover-area.right { right: 0; padding-right: 72px; }
-        .nav-hover-btn { opacity: 0; pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(.55,.06,.41,.97);
-            background: #fff; border: 2.5px solid #bdbdbd; border-radius: 14px;
-            font-size: 28px; font-weight: bold; color: #181818;
-            padding: 14px 32px; box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-            letter-spacing: 1.5px; user-select: none; cursor: pointer; position: relative;}
-        .nav-hover-area:hover .nav-hover-btn, .nav-hover-btn:focus {
-            opacity: 1; pointer-events: auto;}
-        .nav-hover-btn:hover { background: #181818; color: #fff; border-color: #181818;}
-        .info-section { display:flex; align-items:flex-start; justify-content:flex-start; background:#f5f5f5;}
-        .info-content { padding:80px 0 0 80px; font-size:2.2rem; font-weight:bold;}
-        .main-section { display:flex; flex-direction:column; align-items:center; justify-content:center; background:#eee;}
+        html, body {
+            margin:0; padding:0;
+            width:100vw; min-height:100vh;
+            background: #eee;
+            overflow-x:hidden;
+            scroll-behavior: smooth;
+        }
+        body { font-family: 'Arial', '맑은 고딕', sans-serif; }
+        /* ----- 메뉴바 ----- */
+        .menu-bar {
+            position: fixed; top: 0; left: 0; width: 100vw; z-index: 3000;
+            display: flex; justify-content: center; align-items: center;
+            background: rgba(255,255,255,0.96);
+            box-shadow: 0 4px 12px 0 #0002;
+            height: 68px; gap: 36px;
+            transform: translateY(-100%); transition: transform 0.48s cubic-bezier(.42,1.43,.49,.97);
+        }
+        .menu-bar.visible { transform: translateY(0);}
+        .menu-btn {
+            background: none; border: none; font-size: 1.38rem; font-weight: 700;
+            color: #42536c; letter-spacing: 1.2px; padding: 6px 22px; border-radius: 22px; cursor: pointer;
+            transition: background 0.18s, color 0.18s;
+        }
+        .menu-btn.active,
+        .menu-btn:focus { background: #42536c; color: #fff; }
+        .menu-btn:hover { background: #e3eaf5; color: #42536c; }
+        /* ----- 메인 섹션 ----- */
+        .main-section {
+            width: 100vw; height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #eee; position: relative;
+        }
         .profile-pic {
             width: 200px; height: 200px; background: #bbb;
-            border-radius: 50%; overflow: hidden; margin-bottom: 32px; margin-top: 16px;
+            border-radius: 50%; overflow: hidden;
+            margin-bottom: 32px; margin-top: 16px;
             opacity: 0; transform: scale(0.7);
             transition: opacity 0.7s cubic-bezier(.46,1.64,.62,1), transform 0.8s cubic-bezier(.46,1.64,.62,1);
             box-shadow: 0 4px 18px rgba(0,0,0,0.16); border: 8px solid #fff;
@@ -43,11 +55,86 @@
             transition: opacity 0.9s cubic-bezier(.49,1.23,.44,1.01), transform 0.7s cubic-bezier(.39,1.26,.44,.95);
         }
         .portfolio-title.animated { opacity: 1; transform: translateY(0);}
+        /* ----- INFO 섹션 ----- */
+        .info-section { display:flex; align-items:flex-start; justify-content:flex-start; background:#f5f5f5; height:100vh;}
+        .info-content { padding:80px 0 0 80px; font-size:2.2rem; font-weight:bold;}
+        /* ----- CONTACT 섹션 ----- */
+        .contact-section {
+            width: 100vw; min-height: 100vh;
+            display: flex; align-items: flex-start; justify-content: center;
+            background: #fff; padding: 0; box-sizing: border-box;
+            position: relative;
+        }
+        .contact-inner {
+            display: flex; flex-direction: row; align-items: flex-start; justify-content: center;
+            width: 100%; max-width: 1500px; margin: 0 auto; min-height: 700px;
+            padding: 120px 0 40px 0; gap: 66px;
+        }
+        .contact-left {
+            flex: 1.5 1 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin-right: 40px;
+        }
+        .contact-quote {
+            font-size: 1.4rem; color: #2b2b2b;
+            text-align: center; font-weight: 500; line-height: 1.65; margin-bottom: 40px;
+            margin-top: 60px;
+        }
+        .contact-bar {
+            width: 44px; height: 2.5px; background: #c3cfe7; margin: 0 auto 26px auto;
+        }
+        .contact-info {
+            font-size: 1.08rem; color: #333; text-align: center; margin-bottom: 34px; font-weight: 600;
+        }
+        .contact-btns {
+            display: flex; gap: 16px; justify-content: center; margin-top: 0px;
+        }
+        .contact-btn {
+            background: #fff; color: #42536c; border: 2px solid #b0bfd3;
+            font-size: 1.05rem; font-weight: 600; padding: 11px 28px; border-radius: 11px;
+            transition: background 0.17s, color 0.17s, border 0.17s;
+            cursor: pointer;
+        }
+        .contact-btn:hover {
+            background: #42536c; color: #fff; border-color: #42536c;
+        }
+        .contact-right {
+            flex: 2.2 1 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: center;
+            margin-top: 48px; margin-left: 28px;
+        }
+        .contact-title {
+            font-size: 4.2rem; font-weight: bold; color: #42536c; margin-bottom: 24px; letter-spacing: 2px;
+            margin-top: 38px;
+        }
+        .contact-image-box {
+            width: 600px; max-width: 46vw; height: 390px; overflow: hidden; border-radius: 18px;
+            background: #e8f3ff;
+            box-shadow: 0 8px 42px #0001;
+        }
+        .contact-image-box img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        @media (max-width: 1200px) {
+            .contact-title { font-size: 2.8rem;}
+            .contact-inner { flex-direction: column; align-items: center; padding-top: 110px; gap: 28px;}
+            .contact-left { margin-right: 0;}
+            .contact-right { align-items: center; margin-left: 0; }
+            .contact-image-box { width: 94vw; max-width: 94vw; height: 220px; }
+        }
+        @media (max-width: 700px) {
+            .menu-bar { height: 46px; gap: 9px; }
+            .menu-btn { font-size: 1rem; padding: 3px 12px;}
+            .contact-inner { padding-top: 60px; min-height: 450px;}
+            .contact-title { font-size: 1.4rem;}
+            .contact-image-box { height: 110px; border-radius: 10px;}
+        }
+        /* ----- 프로젝트 섹션 (이전과 동일) ----- */
         .project-section {
             background: #f3f3f3; width: 100vw; height: 100vh;
             overflow-x: hidden; overflow-y: auto;
             display: flex; flex-direction: column;
-            align-items: flex-start; justify-content: flex-start;
+            align-items: center;             /* 중앙 정렬 */
+            justify-content: flex-end;       /* 하단 정렬 */
+            padding-bottom: 0vh;             /* 원하는 만큼 하단 여백(조절 가능) */
         }
         .project-bigcard-wrapper {
             display: flex; flex-direction: row; gap: 48px; align-items: flex-start;
@@ -61,16 +148,7 @@
             flex-direction: column; align-items: center; justify-content: center;
             margin: 0 auto; background-size: cover; background-position: center;
             background-repeat: no-repeat; overflow: hidden;
-            opacity: 0; transform: translateY(-80px);
-            transition: opacity 0.7s cubic-bezier(.6,1.4,.62,1), 
-                        transform 0.8s cubic-bezier(.59,1.25,.64,1.01), 
-                        box-shadow 0.33s cubic-bezier(.44,1.2,.38,.98);
-        }
-        .project-bigcard.visible { opacity: 1; transform: translateY(0);}
-        .project-bigcard:hover {
-            transform: scale(1.045);
-            box-shadow: 0 14px 44px 10px rgba(0,0,0,0.18);
-            z-index: 2;
+            opacity: 1; transform: none;
         }
         .project-bigcard .proj-title, .project-bigcard .proj-name, .project-bigcard .proj-period {
             color: #fff; text-shadow: 0 2px 18px #181818c2, 0 1px 6px #2228;
@@ -87,88 +165,47 @@
             transition: background 0.17s, color 0.17s, border-color 0.2s;
         }
         .proj-more:hover { background: #fff; color: #181818; border-color: #181818; }
-
-        /* 모달 오버레이 스타일 */
-        .project-modal-overlay {
-            position: fixed; top:0; left:0; width:100vw; height:100vh;
-            background: rgba(0,0,0,0.34); z-index: 9999;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.35s cubic-bezier(.52,1.3,.63,1.07);
-        }
-        .project-modal-overlay.active {
-            opacity: 1; pointer-events: auto;
-        }
-        .project-modal {
-            background: #fff; border-radius: 28px; max-width: 780px; min-width: 410px;
-            min-height: 480px; box-shadow: 0 10px 54px #0003;
-            padding: 58px 52px 40px 52px; position: relative;
-            animation: modalPop 0.38s cubic-bezier(.52,1.3,.63,1.07);
-        }
-        @keyframes modalPop {
-            0% { transform: scale(0.7) translateY(80px); opacity:0;}
-            85% { transform: scale(1.05) translateY(-16px); opacity: 1;}
-            100% { transform: scale(1) translateY(0); opacity: 1;}
-        }
-        .modal-close-btn {
-            position: absolute; top: 22px; right: 24px;
-            font-size: 28px; font-weight: bold; color: #181818bb;
-            background: none; border: none; cursor: pointer; z-index: 5;
-            transition: color 0.14s;
-        }
-        .modal-close-btn:hover { color: #d80000; }
-        .modal-title {
-            font-size: 2.1rem; font-weight: bold; margin-bottom: 22px;
-        }
-        .modal-content {
-            font-size: 1.13rem; line-height: 1.85; color: #222;
-        }
-        @media (max-width: 700px) {
-            .project-modal { max-width: 98vw; min-width: 0; padding: 24px 7vw 18px 7vw;}
-        }
+        
     </style>
 </head>
+
 <body>
-<div id="scrollContainer" class="h-scroll-container" style="transform: translateX(-100vw);">
-    <!-- INFO -->
-    <section class="section info-section">
-        <div class="nav-hover-area right" id="infoRightArea">
-            <button class="nav-hover-btn" id="toMainFromInfo">MAIN &gt;</button>
-        </div>
-        <div class="info-content">INFO 영역</div>
-    </section>
-    <!-- MAIN -->
-    <section class="section main-section">
-        <div class="nav-hover-area left" id="mainLeftArea">
-            <button class="nav-hover-btn" id="goInfo">&lt; INFO</button>
-        </div>
-        <div class="nav-hover-area right" id="mainRightArea">
-            <button class="nav-hover-btn" id="goProject">PROJECT &gt;</button>
-        </div>
+        <!-- 메뉴바 hover 감지용 영역 -->
+    <div id="menuHoverArea" style="position:fixed;top:0;left:0;width:100vw;height:80px;z-index:2000;pointer-events:auto;"></div>
+    <!-- 메뉴바 -->
+    <nav class="menu-bar" id="menuBar">
+        <button class="menu-btn" data-goto="main">MAIN</button>
+        <button class="menu-btn" data-goto="info">INFO</button>
+        <button class="menu-btn" data-goto="project">PROJECT</button>
+        <button class="menu-btn" data-goto="contact">CONTACT</button>
+    </nav>
+    <!-- MAIN 섹션 (맨 처음!) -->
+    <section class="section main-section" id="mainSection" style="height:100vh;">
         <div class="profile-pic" id="mainProfilePic">
             <img src="profile.jpg" alt="My Pic">
         </div>
         <div class="portfolio-title" id="mainTitle">PORTFOLIO</div>
     </section>
-    <!-- PROJECT -->
-    <section class="section project-section">
-        <div class="nav-hover-area left" id="projectLeftArea">
-            <button class="nav-hover-btn" id="goMainFromProject">&lt; MAIN</button>
-        </div>
+    <!-- INFO 섹션 (두번째!) -->
+    <section class="section info-section" id="infoSection" style="height:100vh;">
+        <div class="info-content">INFO 영역</div>
+    </section>
+    <!-- PROJECT 섹션 -->
+    <section class="section project-section" id="projectSection" style="height:100vh;">
         <div class="project-bigcard-wrapper" id="projectCardWrapper">
-            <div class="project-bigcard" data-detail="1">
+            <div class="project-bigcard visible">
                 <div class="proj-title">PROJECT.1</div>
                 <div class="proj-name">PROJECT NAME 1</div>
                 <div class="proj-period">2024.01 ~ 2024.06</div>
                 <button class="proj-more">MORE</button>
             </div>
-            <div class="project-bigcard" data-detail="2">
+            <div class="project-bigcard visible">
                 <div class="proj-title">PROJECT.2</div>
                 <div class="proj-name">PROJECT NAME 2</div>
                 <div class="proj-period">2023.05 ~ 2023.12</div>
                 <button class="proj-more">MORE</button>
             </div>
-            <div class="project-bigcard" data-detail="3">
+            <div class="project-bigcard visible">
                 <div class="proj-title">PROJECT.3</div>
                 <div class="proj-name">PROJECT NAME 3</div>
                 <div class="proj-period">2023.01 ~ 2023.04</div>
@@ -176,97 +213,128 @@
             </div>
         </div>
     </section>
-</div>
-<!-- 프로젝트 상세 오버레이/모달 -->
-<div id="projectModalOverlay" class="project-modal-overlay">
-    <div class="project-modal" id="projectModal">
-        <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
-        <div class="modal-title" id="modalTitle"></div>
-        <div class="modal-content" id="modalContent"></div>
-    </div>
-</div>
-<script>
-    // 진입 시 메인부터, 프로필 원 -> 타이틀 애니
-    document.addEventListener('DOMContentLoaded', () => {
-        goToSection(1); // MAIN
-        setTimeout(() => {
-            document.getElementById('mainProfilePic').classList.add('animated');
-        }, 150);
-        document.getElementById('mainProfilePic').addEventListener('transitionend', function handler(e) {
-            if (e.propertyName === 'opacity') {
-                setTimeout(() => document.getElementById('mainTitle').classList.add('animated'), 180);
-                document.getElementById('mainProfilePic').removeEventListener('transitionend', handler);
+    <!-- CONTACT 섹션 -->
+    <section class="section contact-section" id="contactSection">
+        <div class="contact-inner">
+            <div class="contact-left">
+                <div class="contact-quote">
+                    "아름답고 화려한 디자인만을 만드는 것이 목표가 아닌,<br>
+                    최적의 사용자 경험을 제공하는 것을 목표로 하는<br>
+                    웹 퍼블리셔, 김지민이 되겠습니다."
+                </div>
+                <div class="contact-bar"></div>
+                <div class="contact-info">연락처 : dimdee@naver.com, 010 9965 5593</div>
+                <div class="contact-btns">
+                    <button class="contact-btn" onclick="window.open('about:blank')">프로필 사이트 기획안 살펴보기</button>
+                    <button class="contact-btn" onclick="window.open('https://github.com/')">GIT 바로가기</button>
+                </div>
+            </div>
+            <div class="contact-right">
+                <div class="contact-title">Contact</div>
+                <div class="contact-image-box">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="profile" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+                // (아래의 JS 코드 전체를 붙여넣기!)
+        // 1. 기존 메뉴바, 섹션 이동, active 처리 스크립트
+        // 2. 그리고 메뉴바 hover 관련 코드 (아래 추가)
+        
+        // 기존 메뉴바, 섹션 이동, active 처리 스크립트 ... (생략 가능, 이미 있다면)
+
+        // ▼▼▼ [여기에 아래의 코드 붙이기] ▼▼▼
+        const menuBar = document.getElementById('menuBar');
+        const menuHoverArea = document.getElementById('menuHoverArea');
+        let menuForceVisible = false;
+
+        function showMenuBar() {
+            if (!menuForceVisible) menuBar.classList.add('visible');
+        }
+        function hideMenuBar() {
+            if (!menuForceVisible) menuBar.classList.remove('visible');
+        }
+
+        menuHoverArea.addEventListener('mouseenter', showMenuBar);
+        menuHoverArea.addEventListener('mouseleave', () => setTimeout(() => {
+            if (!menuBar.matches(':hover')) hideMenuBar();
+        }, 30));
+
+        menuBar.addEventListener('mouseenter', showMenuBar);
+        menuBar.addEventListener('mouseleave', () => setTimeout(() => {
+            if (!menuHoverArea.matches(':hover')) hideMenuBar();
+        }, 30));
+
+        function checkMainSection() {
+            const mainSection = document.getElementById('mainSection');
+            const rect = mainSection.getBoundingClientRect();
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            if(rect.top < vh/2 && rect.bottom > vh/2) {
+                menuForceVisible = true;
+                menuBar.classList.add('visible');
+            } else {
+                menuForceVisible = false;
+                menuBar.classList.remove('visible');
+                if (!menuHoverArea.matches(':hover') && !menuBar.matches(':hover')) menuBar.classList.remove('visible');
             }
+        }
+        window.addEventListener('scroll', checkMainSection);
+        window.addEventListener('resize', checkMainSection);
+        document.addEventListener('DOMContentLoaded', checkMainSection);
+        // ▲▲▲
+        // 메뉴바 애니메이션 (진입시)
+        document.addEventListener('DOMContentLoaded', function() {
+            // 프로필 원 + 타이틀 애니
+            setTimeout(()=>document.getElementById('mainProfilePic').classList.add('animated'), 250);
+            document.getElementById('mainProfilePic').addEventListener('transitionend', function handler(e) {
+                if (e.propertyName === 'opacity') {
+                    setTimeout(()=>document.getElementById('mainTitle').classList.add('animated'), 160);
+                    document.getElementById('mainProfilePic').removeEventListener('transitionend', handler);
+                    // 메뉴바 슬라이드 인
+                    setTimeout(()=>document.getElementById('menuBar').classList.add('visible'), 450);
+                }
+            });
         });
-    });
+        // 메뉴바 클릭 → 해당 섹션으로 이동
+        document.querySelectorAll('.menu-btn').forEach(btn=>{
+            btn.onclick = function() {
+                let goto = btn.getAttribute('data-goto');
+                let sectionId = {
+                    main: 'mainSection',
+                    info: 'infoSection',
+                    project: 'projectSection',
+                    contact: 'contactSection'
+                }[goto];
+                document.getElementById(sectionId).scrollIntoView({behavior:'smooth'});
+            };
+        });
 
-    // 섹션 이동 함수 (카드 등장 애니메이션은 transform 끝난 후 실행)
-    function goToSection(idx) {
-        const container = document.getElementById('scrollContainer');
-        container.style.transform = `translateX(-${idx * 100}vw)`;
-        // 프로젝트 카드 애니메이션
-        if (idx === 2) {
-            const cards = document.querySelectorAll('.project-bigcard');
-            cards.forEach(card => card.classList.remove('visible'));
-            setTimeout(() => {
-                cards.forEach((card, i) => {
-                    setTimeout(() => card.classList.add('visible'), 180 + i * 130);
-                });
-            }, 820);
-        }
-    }
-    // 네비 이벤트
-    document.getElementById('mainLeftArea').onclick = e => { goToSection(0); };
-    document.getElementById('mainRightArea').onclick = e => { goToSection(2); };
-    document.getElementById('infoRightArea').onclick = e => { goToSection(1); };
-    document.getElementById('projectLeftArea').onclick = e => { goToSection(1); };
+        // 섹션 감지해서 메뉴바 active 처리
+        window.addEventListener('scroll', function() {
+            let scrollY = window.scrollY || window.pageYOffset;
+            let ids = ['mainSection', 'infoSection', 'projectSection', 'contactSection'];
+            let idx = 0;
+            for (let i=0;i<ids.length;i++) {
+                let sec = document.getElementById(ids[i]);
+                let top = sec.getBoundingClientRect().top + window.scrollY;
+                if (scrollY + 80 >= top) idx = i;
+            }
+            document.querySelectorAll('.menu-btn').forEach((btn,i)=>{
+                btn.classList.toggle('active', i===idx);
+            });
+        });
 
-    // 프로젝트 상세 모달 데이터 (샘플)
-    const projectDetails = {
-        1: {
-            title: 'PROJECT.1 - 상세 소개',
-            content: '이 프로젝트는 2024년 1월부터 6월까지 진행한 내용입니다.<br>실제 상세 내용 및 역할, 기여도, 결과물 이미지를 여기에 넣을 수 있습니다.'
-        },
-        2: {
-            title: 'PROJECT.2 - 상세 소개',
-            content: '2023년 5월~12월까지 수행한 프로젝트입니다.<br>프로젝트의 주요 성과와 도전과제, 결과물을 설명할 수 있습니다.'
-        },
-        3: {
-            title: 'PROJECT.3 - 상세 소개',
-            content: '2023년 1월~4월의 프로젝트에 대한 상세 설명.<br>포트폴리오에 어울리는 구체적인 소개를 추가할 수 있습니다.'
-        }
-    };
-
-    // 모달 오픈/닫기 함수
-    function openModal(idx) {
-        document.getElementById('modalTitle').innerHTML = projectDetails[idx].title;
-        document.getElementById('modalContent').innerHTML = projectDetails[idx].content;
-        document.getElementById('projectModalOverlay').classList.add('active');
-    }
-    function closeModal() {
-        document.getElementById('projectModalOverlay').classList.remove('active');
-    }
-
-    // MORE 버튼 이벤트 할당
-    document.querySelectorAll('.project-bigcard .proj-more').forEach((btn, idx) => {
-        btn.onclick = function(e) {
-            e.stopPropagation();
-            const card = btn.closest('.project-bigcard');
-            openModal(card.getAttribute('data-detail'));
-        }
-    });
-
-    // 모달 닫기(✕, 오버레이)
-    document.getElementById('modalCloseBtn').onclick = closeModal;
-    document.getElementById('projectModalOverlay').onclick = function(e) {
-        // 바깥 영역 클릭 시 닫기
-        if(e.target === this) closeModal();
-    };
-
-    // ESC로 모달 닫기
-    document.addEventListener('keydown', function(e){
-        if(e.key === "Escape") closeModal();
-    });
-</script>
+        // 메인에서 스크롤 아래로 내릴 때 infoSection으로 이동 (1회만)
+        let mainOnce = false;
+        window.addEventListener('wheel', function(e){
+            if(!mainOnce && window.scrollY < 10 && e.deltaY > 0){
+                mainOnce = true;
+                setTimeout(()=>mainOnce=false, 1500);
+                document.getElementById('infoSection').scrollIntoView({behavior:'smooth'});
+            }
+        }, {passive:true});
+    </script>
+    
 </body>
 </html>
