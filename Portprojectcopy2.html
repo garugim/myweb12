@@ -32,10 +32,26 @@
         .menu-btn:hover { background: #e3eaf5; color: #42536c; }
         /* ----- 메인 섹션 ----- */
         .main-section {
-            width: 100vw; height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: #eee; position: relative;
-        }
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;           /* flex로 */
+    flex-direction: column;  /* 세로 정렬 */
+    justify-content: center; /* 수직 중앙 */
+    align-items: center;     /* 수평 중앙 */
+}
+.main-section::before {
+    content: "";
+    position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0;
+    background: linear-gradient(rgba(18,25,34,0.44), rgba(18,25,34,0.48)),
+                url('./River-Trees.jpg') center center / cover no-repeat;
+    transition: transform 0.35s cubic-bezier(.44,1.2,.38,.98);
+    will-change: transform;
+    pointer-events: none;
+    transform: translate(var(--main-bg-tx, 0px), var(--main-bg-ty, 0px)) scale(1.06);
+}
+
+
         .profile-pic {
             width: 200px; height: 200px; background: #bbb;
             border-radius: 50%; overflow: hidden;
@@ -49,7 +65,7 @@
         .profile-pic img { width:100%; height:100%; object-fit:cover;}
         .portfolio-title {
             font-size: 54px; font-weight: bold; letter-spacing: 3.5px;
-            color: #111; margin-top: 20px; line-height: 1.1;
+            color: #ffffff; margin-top: 20px; line-height: 1.1;
             text-shadow: 2px 2px 8px #fff7; text-align: center;
             opacity: 0; transform: translateY(30px);
             transition: opacity 0.9s cubic-bezier(.49,1.23,.44,1.01), transform 0.7s cubic-bezier(.39,1.26,.44,.95);
@@ -94,6 +110,7 @@
             align-self: flex-start;
             margin-bottom: 24px;
 }
+
 /* 기존 info-section, info-inner 스타일 그대로 두세요! */
 
 /* --- 페이드인/슬라이드 효과 --- */
@@ -282,6 +299,38 @@
         }
     </style>
 </head>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    const mainSection = document.querySelector('.main-section');
+    const bg = mainSection; // ::before에 스타일 적용
+    let mouseX = 0, mouseY = 0;
+
+    mainSection.addEventListener('mousemove', function(e){
+        // 섹션 내 마우스 좌표 비율(0~1)
+        const rect = mainSection.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        // -1~1로 변환 (가운데 기준)
+        const moveX = (x - 0.5) * 2;
+        const moveY = (y - 0.5) * 2;
+        // 최대 이동 픽셀
+        const maxMove = 28;
+        const tx = -moveX * maxMove;
+        const ty = -moveY * maxMove;
+
+        // ::before에 스타일 동적으로 적용
+        mainSection.style.setProperty('--main-bg-tx', tx + 'px');
+        mainSection.style.setProperty('--main-bg-ty', ty + 'px');
+    });
+
+    // 마우스가 섹션 밖으로 나가면 원위치
+    mainSection.addEventListener('mouseleave', function(){
+        mainSection.style.setProperty('--main-bg-tx', '0px');
+        mainSection.style.setProperty('--main-bg-ty', '0px');
+    });
+});
+</script>
 
 <body>
     <!-- 메뉴바 hover 감지용 영역 -->
