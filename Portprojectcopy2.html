@@ -40,15 +40,22 @@
     justify-content: center; /* 수직 중앙 */
     align-items: center;     /* 수평 중앙 */
 }
+
 .main-section::before {
     content: "";
     position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0;
-    background: linear-gradient(rgba(18,25,34,0.44), rgba(18,25,34,0.48)),
+    background: linear-gradient(rgba(18,25,34,0.12), rgba(18,25,34,0.18)),
                 url('./River-Trees.jpg') center center / cover no-repeat;
     transition: transform 0.35s cubic-bezier(.44,1.2,.38,.98);
     will-change: transform;
     pointer-events: none;
     transform: translate(var(--main-bg-tx, 0px), var(--main-bg-ty, 0px)) scale(1.06);
+    
+}
+.main-section > .profile-pic,
+.main-section > .portfolio-title {
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -84,9 +91,9 @@
             margin: 0 auto;
         }
         .info-photo {
-            width: 480px; height: 700px; background: #bdbdbd;
+            width: 600px; height: 800px; background: transparent;
             border-radius: 40px;
-            margin-top: 8px;
+            margin-top: 95px;
             flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
         }
@@ -103,12 +110,58 @@
             font-size: 3.4rem; font-weight: bold; margin-bottom: 38px;
         }
         .info-intro {
-            font-size: 2.1rem; margin-bottom: 340px;
+            font-size: 1.5rem; margin-bottom: 340px;
         }
         .info-email {
             font-size: 1.5rem; margin-top: auto; color: #111; font-weight: 500;
             align-self: flex-start;
             margin-bottom: 24px;
+}
+.skill-section {
+  width: 100vw;
+  min-height: 36vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #fafbfe;
+  padding: 32px 0 52px 0;
+}
+.skill-inner {
+  width: 90vw; max-width: 1160px; margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center;
+}
+.skill-title {
+  font-size: 2.5rem; font-weight: bold; margin-bottom: 24px; color: #3c456b; letter-spacing: 1.2px;
+}
+.skill-list {
+  display: flex; flex-wrap: wrap; gap: 38px; justify-content: center; align-items: center; margin-bottom: 28px;
+}
+.skill-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px;
+  width: 102px;
+  font-size: 1.1rem;
+  color: #252525;
+  background: #fff; border-radius: 18px; box-shadow: 0 3px 12px #b9d1ef22;
+  padding: 18px 10px 11px 10px;
+  transition: transform 0.23s cubic-bezier(.44,1.2,.38,.98), box-shadow 0.15s;
+}
+.skill-item:hover {
+  transform: scale(1.1) translateY(-8px);
+  box-shadow: 0 12px 26px #6a84c133;
+}
+.skill-item img {
+  width: 48px; height: 48px; object-fit: contain;
+}
+.skill-desc {
+  font-size: 1.07rem; color: #444b60; text-align: center;
+  margin-top: 10px; max-width: 680px; line-height: 1.6;
+}
+@media (max-width: 700px) {
+  .skill-title { font-size: 1.3rem;}
+  .skill-item { width: 70px; font-size: 0.8rem; padding: 10px 2px;}
+  .skill-item img { width: 36px; height: 36px;}
+  .skill-list { gap: 13px;}
 }
 
 /* 기존 info-section, info-inner 스타일 그대로 두세요! */
@@ -216,27 +269,73 @@
         }
         /* ----- 프로젝트 섹션 (이전과 동일) ----- */
         .project-section {
-            background: #f3f3f3; width: 100vw; height: 100vh;
+            background: #f3f3f3; width: 100vw; min-height: 950px;
             overflow-x: hidden; overflow-y: auto;
             display: flex; flex-direction: column;
             align-items: center;             /* 중앙 정렬 */
-            justify-content: flex-end;       /* 하단 정렬 */
+            justify-content: center;       /* 하단 정렬 */
             padding-bottom: 0vh;             /* 원하는 만큼 하단 여백(조절 가능) */
         }
         .project-bigcard-wrapper {
-            display: flex; flex-direction: row; gap: 48px; align-items: flex-start;
-            overflow-x: auto; overflow-y: visible; width: 100%;
-            padding: 32px 32px 36px 32px; box-sizing: border-box;
-            scrollbar-color: #bbb #eaeaea; scrollbar-width: thin;
+            display: flex;
+            flex-direction: row;
+            gap: 48px;
+            align-items: flex-start;
+            overflow-x: auto;       /* ← 가로 스크롤 활성화 */
+            overflow-y: hidden;     /* ← 세로 스크롤 비활성화 */
+            width: 100%;
+            padding: 32px 32px 36px 32px;
+            box-sizing: border-box;
+            scrollbar-color: #bbb #eaeaea; /* 스크롤바 색상 (옵션) */
+            scrollbar-width: thin;
+            min-height: 800px;      /* 카드 높이에 맞게 */
+        }
+        .project-bigcard-wrapper::-webkit-scrollbar {
+            height: 16px; /* 스크롤바 두께 */
+        }
+        .project-bigcard-wrapper::-webkit-scrollbar-thumb {
+            background: #bbb;
+            border-radius: 8px;
+        }
+        .project-bigcard-wrapper::-webkit-scrollbar-track {
+            background: #eaeaea;
+            border-radius: 8px;
         }
         .project-bigcard {
-            width: 600px; height: 880px; background: #ddd; border: 5px solid #222;
-            border-radius: 16px; box-sizing: border-box; display: flex;
-            flex-direction: column; align-items: center; justify-content: center;
-            margin: 0 auto; background-size: cover; background-position: center;
-            background-repeat: no-repeat; overflow: hidden;
-            opacity: 1; transform: none;
-            transition: transform 0.38s cubic-bezier(.38,1.4,.5,1.12), box-shadow 0.25s cubic-bezier(.44,1.2,.38,.98);
+    width: 600px;
+    min-width: 600px;
+    max-width: 600px;
+    height: 880px;
+    min-height: 880px;
+    max-height: 880px;
+    background: #ddd;
+    border: 5px solid #222;
+    border-radius: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    opacity: 1;
+    transform: none;
+    transition: transform 0.38s cubic-bezier(.38,1.4,.5,1.12), box-shadow 0.25s cubic-bezier(.44,1.2,.38,.98);
+}
+
+        .project-bigcard::before {
+            content: '';
+            position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(26,32,48,0.33); /* 어둡게 덮기 */
+            z-index: 0;
+            pointer-events: none;
+            }
+        .project-bigcard > * {
+            position: relative;
+            z-index: 1;
         }
         .project-bigcard:hover {
             transform: scale(1.07);
@@ -354,21 +453,60 @@ document.addEventListener('DOMContentLoaded', function(){
   <div class="info-inner">
     <div class="info-photo" id="infoPhoto"></div>
     <div class="info-texts" id="infoTexts">
-      <div class="info-greeting">안녕하세요!</div>
-      <div class="info-intro">저는~~~</div>
+      <div class="info-greeting">안녕하세요! 저는 한승준입니다!</div>
+      <div class="info-intro">저는 대학기간동안 영상제작 공모전 출품등 다양한 활동을 진행했으며<br>
+        <br>활동을 진행하며 편집과 기획에 관련한 심화된 학습을 진행했습니다
+</div>
       <div class="info-email">garugim@gmail.com</div>
     </div>
   </div>
 </section>
 
-    </section>
+<section class="section skill-section" id="skillSection">
+  <div class="skill-inner">
+    <div class="skill-title">역량</div>
+    <div class="skill-list">
+      <div class="skill-item">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" alt="Photoshop" />
+        <span>Photoshop</span>
+      </div>
+      <div class="skill-item">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premiere/premiere-original.svg" alt="Premiere" />
+        <span>Premiere Pro</span>
+      </div>
+      <div class="skill-item">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects" />
+        <span>After Effects</span>
+      </div>
+      <div class="skill-item">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" />
+        <span>JavaScript</span>
+      </div>
+      <div class="skill-item">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+        <span>Python</span>
+      </div>
+      <div class="skill-item">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/adobeillustrator/adobeillustrator-plain.svg" alt="Illustrator" />
+        <span>Illustrator</span>
+      </div>
+    </div>
+    <div class="skill-desc">
+      예능/미디어 콘텐츠 편집, 영상 연출, 그래픽 디자인,  
+      다양한 플랫폼용 콘텐츠 기획 및 제작 경험이 있습니다.
+    </div>
+  </div>
+</section>
+
+    
     <!-- PROJECT 섹션 -->
     <section class="section project-section" id="projectSection" style="height:100vh;">
         <div class="project-bigcard-wrapper" id="projectCardWrapper">
-            <div class="project-bigcard visible" data-detail="1">
+            <div class="project-bigcard visible" data-detail="1" 
+                style="background-image: url('./BusanC.png'); background-size:cover; background-position:center;">
                 <div class="proj-title">PROJECT.1</div>
-                <div class="proj-name">PROJECT NAME 1</div>
-                <div class="proj-period">2024.01 ~ 2024.06</div>
+                <div class="proj-name">부산 영상 공모전</div>
+                <div class="proj-period">2021.10</div>
                 <button class="proj-more">MORE</button>
             </div>
             <div class="project-bigcard visible" data-detail="2">
@@ -383,6 +521,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 <div class="proj-period">2023.01 ~ 2023.04</div>
                 <button class="proj-more">MORE</button>
             </div>
+            <div class="project-bigcard visible" data-detail="3">
+                <div class="proj-title">PROJECT.4</div>
+                <div class="proj-name">PROJECT NAME 3</div>
+                <div class="proj-period">2023.01 ~ 2023.04</div>
+                <button class="proj-more">MORE</button>
+            </div>
+            
         </div>
     </section>
     <!-- CONTACT 섹션 -->
@@ -390,14 +535,11 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="contact-inner">
             <div class="contact-left">
                 <div class="contact-quote">
-                    "아름답고 화려한 디자인만을 만드는 것이 목표가 아닌,<br>
-                    최적의 사용자 경험을 제공하는 것을 목표로 하는<br>
-                    웹 퍼블리셔, 김지민이 되겠습니다."
+                    
                 </div>
                 <div class="contact-bar"></div>
-                <div class="contact-info">연락처 : dimdee@naver.com, 010 9965 5593</div>
+                <div class="contact-info">연락처 : garugim@gmail.com, 010 1234 4321</div>
                 <div class="contact-btns">
-                    <button class="contact-btn" onclick="window.open('about:blank')">프로필 사이트 기획안 살펴보기</button>
                     <button class="contact-btn" onclick="window.open('https://github.com/')">GIT 바로가기</button>
                 </div>
             </div>
