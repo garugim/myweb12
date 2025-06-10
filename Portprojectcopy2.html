@@ -79,7 +79,7 @@
         }
         .portfolio-title.animated { opacity: 1; transform: translateY(0);}
         /* ----- INFO 섹션 ----- */
-        .info-section { display:flex; align-items:flex-start; justify-content:flex-start; background:#f5f5f5; height:100vh;}
+        .info-section { display:flex; align-items:flex-start; justify-content:flex-start; background:#f5f5f5; height:100vh; padding-bottom: 60px;  /* 이메일 박스 높이만큼 여유 */}
         /* INFO 섹션 (2단 레이아웃, 이미지 참고) */
         .info-inner {
             display: flex;
@@ -87,10 +87,13 @@
             align-items: center;
             justify-content: flex-start;
             width: 90vw; max-width: 1600px; height: 90vh;
-            gap: 60px;
+            gap: 68px;
             margin: 0 auto;
         }
         .info-photo {
+              display: flex;
+            flex-direction: column;
+            align-items: center;
             width: 600px; height: 800px; background: transparent;
             border-radius: 40px;
             margin-top: 95px;
@@ -99,6 +102,11 @@
         }
         .info-photo img {
             width: 100%; height: 100%; object-fit: cover; border-radius: 40px;
+              width: 100%;
+            height: auto;
+            max-height: 1000px;  /* 프로필 영역의 높이에 맞게 조정 */
+            border-radius: 40px;
+            object-fit: cover;
         }
         .info-texts {
             display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
@@ -110,13 +118,23 @@
             font-size: 3.4rem; font-weight: bold; margin-bottom: 38px;
         }
         .info-intro {
-            font-size: 1.5rem; margin-bottom: 340px;
+            font-size: 1.5rem; margin-bottom: 30px;
         }
-        .info-email {
-            font-size: 1.5rem; margin-top: auto; color: #111; font-weight: 500;
-            align-self: flex-start;
-            margin-bottom: 24px;
+        .info-email-bottom {
+        position: absolute;
+        left: 0; right: 0; bottom: -60px;
+        text-align: left;
+        font-size: 1.2rem;
+        color: #222;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+}        
+.school-logo-inline {
+    width: 400px;    /* 로고 크기 */
+    margin: 30px 0px 0px 225px;
+    display: block;
 }
+ 
 .skill-section {
   width: 100vw;
   min-height: 36vh;
@@ -451,13 +469,22 @@ document.addEventListener('DOMContentLoaded', function(){
     <!-- INFO 섹션 -->
  <section class="section info-section" id="infoSection">
   <div class="info-inner">
-    <div class="info-photo" id="infoPhoto"></div>
+    <div class="info-photo" id="infoPhoto">
+        <img src="profile.png" alt="프로필 사진" style="width:100%; height:100%; object-fit:cover; border-radius:40px;">
+    </div>
     <div class="info-texts" id="infoTexts">
       <div class="info-greeting">안녕하세요! 저는 한승준입니다!</div>
-      <div class="info-intro">저는 대학기간동안 영상제작 공모전 출품등 다양한 활동을 진행했으며<br>
-        <br>활동을 진행하며 편집과 기획에 관련한 심화된 학습을 진행했습니다
-</div>
-      <div class="info-email">garugim@gmail.com</div>
+      <div class="info-intro">
+        저는 대학기간동안 영상제작 공모전 출품등을 포함한 다양한 활동을 진행했으며<br>
+        <br>이러한 활동을 진행하며 편집과 기획에 관련한 심화된 학습을 진행했습니다.<br>
+        <br> 대학기간동안 진행한 프로젝트를 바탕으로 다양한 직무에 투입 가능한 인재입니다.
+        </div>
+        <img src="경성대.png" alt="경성대학교 로고" class="school-logo-inline">
+        <div class="info-email-bottom">이메일: garugim@gmail.com</div>
+        
+        
+  </div>
+      
     </div>
   </div>
 </section>
@@ -471,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function(){
         <span>Photoshop</span>
       </div>
       <div class="skill-item">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premiere/premiere-original.svg" alt="Premiere" />
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/premierepro/premierepro-original.svg" alt="Premiere Pro" />
         <span>Premiere Pro</span>
       </div>
       <div class="skill-item">
@@ -487,13 +514,12 @@ document.addEventListener('DOMContentLoaded', function(){
         <span>Python</span>
       </div>
       <div class="skill-item">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/adobeillustrator/adobeillustrator-plain.svg" alt="Illustrator" />
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/illustrator/illustrator-plain.svg" alt="Illustrator" />
         <span>Illustrator</span>
       </div>
     </div>
     <div class="skill-desc">
-      예능/미디어 콘텐츠 편집, 영상 연출, 그래픽 디자인,  
-      다양한 플랫폼용 콘텐츠 기획 및 제작 경험이 있습니다.
+      예능/미디어 콘텐츠 편집, 영상 연출, 그래픽 디자인과 연관된 다양한 제작 툴들을 <br> 대학과정에서 학습했습니다.
     </div>
   </div>
 </section>
