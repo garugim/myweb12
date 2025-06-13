@@ -39,13 +39,15 @@
     flex-direction: column;  /* 세로 정렬 */
     justify-content: center; /* 수직 중앙 */
     align-items: center;     /* 수평 중앙 */
+    left: 0;
+    right: 0;
 }
 
 .main-section::before {
     content: "";
     position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0;
-    background: linear-gradient(rgba(18,25,34,0.12), rgba(18,25,34,0.18)),
-                url('./River-Trees.jpg') center center / cover no-repeat;
+    background: linear-gradient(rgba(10,25,34,0.0), rgba(18,25,34,0)),
+                url('./River-Trees.jpg') center center / cover repeat;
     transition: transform 0.35s cubic-bezier(.44,1.2,.38,.98);
     will-change: transform;
     pointer-events: none;
@@ -163,10 +165,12 @@
   background: #fff; border-radius: 18px; box-shadow: 0 3px 12px #b9d1ef22;
   padding: 18px 10px 11px 10px;
   transition: transform 0.23s cubic-bezier(.44,1.2,.38,.98), box-shadow 0.15s;
+  border: 3px solid #dadada;
 }
 .skill-item:hover {
   transform: scale(1.1) translateY(-8px);
   box-shadow: 0 12px 26px #6a84c133;
+  border: 5px solid #dadada;
 }
 .skill-item img {
   width: 48px; height: 48px; object-fit: contain;
@@ -238,7 +242,7 @@
             margin-top: 60px;
         }
         .contact-bar {
-            width: 44px; height: 2.5px; background: #c3cfe7; margin: 0 auto 26px auto;
+            width: 200px; height: 2.5px; background: #c3cfe7; margin: 0 auto 26px auto;
         }
         .contact-info {
             font-size: 1.08rem; color: #333; text-align: center; margin-bottom: 34px; font-weight: 600;
@@ -261,7 +265,7 @@
         }
         .contact-title {
             font-size: 4.2rem; font-weight: bold; color: #42536c; margin-bottom: 24px; letter-spacing: 2px;
-            margin-top: 38px;
+            margin-top: 38px; margin-right: 335px;
         }
         .contact-image-box {
             width: 600px; max-width: 46vw; height: 390px; overflow: hidden; border-radius: 18px;
@@ -414,6 +418,57 @@
         @media (max-width: 700px) {
             .project-modal { max-width: 95vw; min-width: 0; padding: 24px 5vw 18px 5vw;}
         }
+        .contact-form {
+    width: 420px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    background: transparent;
+    color: #000000;
+    border: 2px solid #fff;
+    border-radius: 0;
+    padding: 14px 12px;
+    font-size: 1.13rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #e94057; /* 포커스 시 빨간색 테두리 */
+}
+
+.contact-form button[type="submit"] {
+    margin-left: auto;
+    background: #ffffff;
+    color: #727272;
+    border: none;
+    padding: 13px 48px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.contact-form button[type="submit"]:hover {
+    background: #8e59be;
+    color: #fff;
+}
+.contact-bar-title {
+  font-size: 1.38rem;
+  font-weight: bold;
+  color: #3c456b;
+  letter-spacing: 1.2px;
+  margin-bottom: 6px;
+  margin-left: 6px;
+}
     </style>
 </head>
 
@@ -499,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function(){
       </div>
       <div class="skill-item">
         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/premierepro/premierepro-original.svg" alt="Premiere Pro" />
-        <span>Premiere Pro</span>
+        <span>PremierePro</span>
       </div>
       <div class="skill-item">
         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects" />
@@ -558,15 +613,23 @@ document.addEventListener('DOMContentLoaded', function(){
     </section>
     <!-- CONTACT 섹션 -->
     <section class="section contact-section" id="contactSection">
+        
         <div class="contact-inner">
             <div class="contact-left">
                 <div class="contact-quote">
                     
                 </div>
+                <div class="contact-bar-title">문의하기</div>
                 <div class="contact-bar"></div>
-                <div class="contact-info">연락처 : garugim@gmail.com, 010 1234 4321</div>
+              
                 <div class="contact-btns">
-                    <button class="contact-btn" onclick="window.open('https://github.com/')">GIT 바로가기</button>
+                          <form class="contact-form" autocomplete="off">
+                            <input type="text" name="name" placeholder="이름" required>
+                            <input type="email" name="email" placeholder="이메일" required>
+                            <textarea name="message" rows="5" placeholder="메시지를 입력하세요." required></textarea>
+                            <button type="submit">제출</button>
+                            <button class="contact-btn" onclick="window.open('https://github.com/')">GIT 바로가기</button>
+                  <div class="contact-info">연락처 : garugim@gmail.com, 010 1234 4321</div>            
                 </div>
             </div>
             <div class="contact-right">
@@ -715,7 +778,10 @@ document.addEventListener('DOMContentLoaded', function(){
         });
 
         // 모달 닫기(✕, 오버레이)
-        document.getElementById('modalCloseBtn').onclick = closeModal;
+        document.getElementById('modalCloseBtn').addEventListener('click', function(e) {
+        e.preventDefault(); // 폼 submit 막기!
+        closeModal();
+        });
         document.getElementById('projectModalOverlay').onclick = function(e) {
             // 바깥 영역 클릭 시 닫기
             if(e.target === this) closeModal();
