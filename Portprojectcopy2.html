@@ -73,9 +73,9 @@
         .profile-pic.animated { opacity: 1; transform: scale(1);}
         .profile-pic img { width:100%; height:100%; object-fit:cover;}
         .portfolio-title {
-            font-size: 54px; font-weight: bold; letter-spacing: 3.5px;
+            font-size: 100px; font-weight: bold; letter-spacing: 3.5px;
             color: #ffffff; margin-top: 20px; line-height: 1.1;
-            text-shadow: 2px 2px 8px #fff7; text-align: center;
+            text-shadow: 4px 4px 16px #fff7; text-align: center;
             opacity: 0; transform: translateY(30px);
             transition: opacity 0.9s cubic-bezier(.49,1.23,.44,1.01), transform 0.7s cubic-bezier(.39,1.26,.44,.95);
         }
@@ -143,7 +143,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: #fafbfe;
+  background: #f5f5f5;
   padding: 32px 0 52px 0;
 }
 .skill-inner {
@@ -291,7 +291,7 @@
         }
         /* ----- 프로젝트 섹션 (이전과 동일) ----- */
         .project-section {
-            background: #f3f3f3; width: 100vw; min-height: 950px;
+            background: #c5c5c5; width: 100vw; min-height: 950px;
             overflow-x: hidden; overflow-y: auto;
             display: flex; flex-direction: column;
             align-items: center;             /* 중앙 정렬 */
@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function(){
     <!-- MAIN 섹션 -->
     <section class="section main-section" id="mainSection" style="height:100vh;">
         <div class="profile-pic" id="mainProfilePic">
-            <img src="profile.jpg" alt="My Pic">
+            <img src="Profile.png" alt="My Pic">
         </div>
         <div class="portfolio-title" id="mainTitle">PORTFOLIO</div>
     </section>
@@ -593,22 +593,25 @@ document.addEventListener('DOMContentLoaded', function(){
                 <div class="proj-period">2021.9.1. ~ 2021 12.17.</div>
                 <button class="proj-more">MORE</button>
             </div>
-            <div class="project-bigcard visible" data-detail="2">
+            <div class="project-bigcard visible" data-detail="2"
+            style="background-image: url('./잡학트리.png'); background-size:cover; background-position:center;">
                 <div class="proj-title">PROJECT.2</div>
-                <div class="proj-name">PROJECT NAME 2</div>
-                <div class="proj-period">2023.05 ~ 2023.12</div>
+                <div class="proj-name">'잡학트리' <br>유튜브 채널 운영</div>
+                <div class="proj-period">2021.03.02 ~ 2021.06.23</div>
                 <button class="proj-more">MORE</button>
             </div>
-            <div class="project-bigcard visible" data-detail="3">
+            <div class="project-bigcard visible" data-detail="3"
+            style="background-image: url('./GPT.png'); background-size:cover; background-position:center;">
                 <div class="proj-title">PROJECT.3</div>
-                <div class="proj-name">PROJECT NAME 3</div>
-                <div class="proj-period">2023.01 ~ 2023.04</div>
+                <div class="proj-name">개인 유튜브 채널 운영</div>
+                <div class="proj-period">2020.01 ~ 2021.05</div>
                 <button class="proj-more">MORE</button>
             </div>
-            <div class="project-bigcard visible" data-detail="4">
+            <div class="project-bigcard visible" data-detail="4"
+            style="background-image: url('./GPT2.png'); background-size:cover; background-position:center;">
                 <div class="proj-title">PROJECT.4</div>
-                <div class="proj-name">PROJECT NAME 3</div>
-                <div class="proj-period">2023.01 ~ 2023.04</div>
+                <div class="proj-name">팟빵 라디오 채널 운영</div>
+                <div class="proj-period">2022.09.01 ~ 2023.12.19</div>
                 <button class="proj-more">MORE</button>
             </div>
             
@@ -758,22 +761,29 @@ document.addEventListener('DOMContentLoaded', function(){
             `
     },
             2: {
-                title: 'PROJECT.2 - 상세 소',
-                content: '2023년 5월~12월까지 수행한 프로젝트입니다.<br>프로젝트의 주요 성과와 도전과제, 결과물을 설명할 수 있습니다.'
+                title: '잡학트리 채널 - 상세 소개',
+                content: `<b>주제</b>: 학교 프로젝트의 일환으로 잡학지식 전달 채널 잡학트리 유튜브 운영<br>
+                <b>역할:</b> 영상 편집 및 녹음 전반 담당<br>
+                <b>성과:</b> 영상제작 및 콘텐츠 기획력 습득, 3달간 구독자 100명 달성
+                <img src="잡학트리1.png" alt="프로젝트 대표 이미지" style="width:100%;margin-top:20px;border-radius:8px;">
+                <br><b>느낀점:</b> 팀플에서의 역할의 중요성과 주어진 역할에 대한 책임감이 중요하다는것을 경험`
             },
             3: {
-                title: 'PROJECT.3 - 상세 개',
-                content: '2023년 1월~4월의 프로젝트에 대한 상세 설명.<br>포트폴리오에 어울리는 구체적인 소개를 추가할 수 있습니다.'
+                title: '개인 유튜브 채널 운영 - 상세 소개',
+                content: `<b>주제</b>: 개인적으로 진행했었던 유튜브 채널 운영 경험<br>
+                <b>역할:</b> 콘텐츠 기획, 영상+섬네일제작과 같은 전반적인 부분 경험 <br>
+                <b>성과:</b> 구독자 1000명 및 총 수익 1000달러 달성
+                <img src="GPT1.png" alt="프로젝트 대표 이미지" style="width:100%;margin-top:20px;border-radius:8px;">
+                <br><b>느낀점:</b> 팀플에서의 역할의 중요성과 주어진 역할에 대한 책임감이 중요하다는것을 경험`
             }, 
             4: {
                  title: 'PROJECT.4 - 상세 소개',
                 content: `
-                    2023년 2월~2023년 6월 동안 진행한 프로젝트입니다.<br>
-                    주요 기획/실행 내용, 본인의 역할, 성과, 대표 이미지를 자유롭게 추가할 수 있습니다.<br><br>
-                    <ul>
-                        <li>팀 내에서 맡은 역할 및 주요 성과</li>
-                        <li>배운 점 및 소감</li>
-                    </ul>
+                    <b>주제</b>: 학교 프로젝트로 진행했던 팟빵 라디오 채널 운영영<br>
+                <b>역할:</b> 콘텐츠 기획, 내용 작성, 녹음등 전반적인 제작작 부분 경험 <br>
+                <b>성과:</b> 청취자 50명 달성
+                <img src="GPT3.png" alt="프로젝트 대표 이미지" style="width:100%;margin-top:20px;border-radius:8px;">
+                <br><b>느낀점:</b> 라디오 콘텐츠 및 콘텐츠의 전반적인 생태계 파악에 도움이 
                 `
             }
         };
